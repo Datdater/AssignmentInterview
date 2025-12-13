@@ -1,0 +1,14 @@
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\bin\Debug\net8.0\StorageAndRetrieval.exe
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\bin\Debug\net8.0\StorageAndRetrieval.deps.json
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\bin\Debug\net8.0\StorageAndRetrieval.runtimeconfig.json
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\bin\Debug\net8.0\StorageAndRetrieval.dll
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\bin\Debug\net8.0\StorageAndRetrieval.pdb
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\obj\Debug\net8.0\StorageAndRetrieval.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\obj\Debug\net8.0\StorageAndRetrieval.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\obj\Debug\net8.0\StorageAndRetrieval.AssemblyInfo.cs
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\obj\Debug\net8.0\StorageAndRetrieval.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\obj\Debug\net8.0\StorageAndRetrieval.dll
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\obj\Debug\net8.0\refint\StorageAndRetrieval.dll
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\obj\Debug\net8.0\StorageAndRetrieval.pdb
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\obj\Debug\net8.0\StorageAndRetrieval.genruntimeconfig.cache
+C:\Users\User\Desktop\ASP\StorageAndRetrieval\StorageAndRetrieval\obj\Debug\net8.0\ref\StorageAndRetrieval.dll
