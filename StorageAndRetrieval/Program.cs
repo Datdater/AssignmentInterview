@@ -30,7 +30,6 @@
         public static List<(int, Double)> StringParsing(string input)
         {
             var result = new List<(int, Double)>();
-            var stack = new Stack<string>();
             int itemIndex = 0;
             for (int i = 0; i < input.Length; i++)
             {
@@ -40,7 +39,6 @@
                 if (input[i] == '"')
                 {
                     quote = true;
-                    stack.Push("\""); 
                     j++;
                 }
                 while (j < input.Length)
@@ -82,8 +80,60 @@
         }
         public static void MergeFiles(List<string> inputFiles, string output)
         {
+
             List<string> listId = new List<string>();
             List<string> listCol = new List<string>();
+            // convert excel to table
+            var maxtrix = ConvertExcelToTable(inputFiles, ref listId, ref listCol);
+
+            // sort columns and id
+            List<string> orderedCols = new List<string>();
+            orderedCols.Add("ID");
+            listCol.Sort();
+            for (int k = 0; k < listCol.Count; k++)
+            {
+                if (listCol[k] != "ID")
+                    orderedCols.Add(listCol[k]);
+            }
+
+            listId.Sort();
+            // wwrite to output file
+            StreamWriter writer = new StreamWriter(output);
+
+            //writee header
+            string headerRow = "";
+            for (int m = 0; m < orderedCols.Count; m++)
+            {
+                headerRow += orderedCols[m];
+                if (m < orderedCols.Count - 1)
+                    headerRow += ",";
+            }
+            writer.WriteLine(headerRow);
+
+            //write dataa rows
+            for (int n = 0; n < listId.Count; n++)
+            {
+                string currentId = listId[n];
+                string dataRow = "";
+
+                for (int p = 0; p < orderedCols.Count; p++)
+                {
+                    string val = "";
+                    if (maxtrix[currentId].ContainsKey(orderedCols[p]))
+                        val = maxtrix[currentId][orderedCols[p]];
+                    dataRow += val;
+                    if (p < orderedCols.Count - 1)
+                        dataRow += ",";
+                }
+
+                writer.WriteLine(dataRow);
+            }
+
+            writer.Close();
+        }
+        public static Dictionary<string, Dictionary<string, string>> ConvertExcelToTable(List<string> inputFiles, ref List<string> listId, ref List<string> listCol)
+        {
+            
             Dictionary<string, Dictionary<string, string>> maxtrix = new Dictionary<string, Dictionary<string, string>>();
 
             // Read each file
@@ -120,51 +170,8 @@
                 }
             }
 
-            // sort columns and id
-            List<string> orderedCols = new List<string>();
-            orderedCols.Add("ID");
-            listCol.Sort();
-            for (int k = 0; k < listCol.Count; k++)
-            {
-                if (listCol[k] != "ID")
-                    orderedCols.Add(listCol[k]);
-            }
-
-            listId.Sort();
-
-            // wwrite to output file
-            StreamWriter writer = new StreamWriter(output);
-
-            //writee header
-            string headerRow = "";
-            for (int m = 0; m < orderedCols.Count; m++)
-            {
-                headerRow += orderedCols[m];
-                if (m < orderedCols.Count - 1)
-                    headerRow += ",";
-            }
-            writer.WriteLine(headerRow);
-
-            //write dataa rows
-            for (int n = 0; n < listId.Count; n++)
-            {
-                string currentId = listId[n];
-                string dataRow = "";
-
-                for (int p = 0; p < orderedCols.Count; p++)
-                {
-                    string val = "";
-                    if (maxtrix[currentId].ContainsKey(orderedCols[p]))
-                        val = maxtrix[currentId][orderedCols[p]];
-                    dataRow += val;
-                    if (p < orderedCols.Count - 1)
-                        dataRow += ",";
-                }
-
-                writer.WriteLine(dataRow);
-            }
-
-            writer.Close();
+            
+            return maxtrix;
         }
     }
 }
