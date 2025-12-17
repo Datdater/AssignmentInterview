@@ -95,48 +95,15 @@
                 if (listCol[k] != "ID")
                     orderedCols.Add(listCol[k]);
             }
-
             listId.Sort();
-            // wwrite to output file
-            StreamWriter writer = new StreamWriter(output);
-
-            //writee header
-            string headerRow = "";
-            for (int m = 0; m < orderedCols.Count; m++)
-            {
-                headerRow += orderedCols[m];
-                if (m < orderedCols.Count - 1)
-                    headerRow += ",";
-            }
-            writer.WriteLine(headerRow);
-
-            //write dataa rows
-            for (int n = 0; n < listId.Count; n++)
-            {
-                string currentId = listId[n];
-                string dataRow = "";
-
-                for (int p = 0; p < orderedCols.Count; p++)
-                {
-                    string val = "";
-                    if (maxtrix[currentId].ContainsKey(orderedCols[p]))
-                        val = maxtrix[currentId][orderedCols[p]];
-                    dataRow += val;
-                    if (p < orderedCols.Count - 1)
-                        dataRow += ",";
-                }
-
-                writer.WriteLine(dataRow);
-            }
-
-            writer.Close();
+            //write file
+            WriteFile(output, orderedCols, listId, maxtrix);
         }
         public static Dictionary<string, Dictionary<string, string>> ConvertExcelToTable(List<string> inputFiles, ref List<string> listId, ref List<string> listCol)
         {
-            
             Dictionary<string, Dictionary<string, string>> maxtrix = new Dictionary<string, Dictionary<string, string>>();
 
-            // Read each file
+            // loop
             for (int i = 0; i < inputFiles.Count; i++)
             {
                 string[] rows = File.ReadAllLines(inputFiles[i]);
@@ -165,13 +132,50 @@
 
                     for (int j = 0; j < header.Length; j++)
                     {
-                        maxtrix[currentId][header[j]] = cells[j];
+                        var oldValue = "";
+                            maxtrix[currentId].TryGetValue(header[j], out oldValue);
+                        if (string.IsNullOrEmpty(oldValue))
+                            maxtrix[currentId][header[j]] = cells[j];
+                        else if (j != 0 && !string.IsNullOrEmpty(oldValue))
+                        {
+                            if (oldValue != cells[j])
+                            {
+                                maxtrix[currentId][header[j]] = cells[j] + "(conflict)";
+                            }
+                        }    
+                            
                     }
                 }
             }
-
-            
             return maxtrix;
         }
+        private static void WriteFile(
+                            string output,
+                            List<string> orderedCols,
+                            List<string> listId,
+                            Dictionary<string, Dictionary<string, string>> maxtrix)
+        {
+            StreamWriter writer = new StreamWriter(output);
+
+            // write header
+            writer.WriteLine(string.Join(",", orderedCols));
+
+            // write data
+            foreach (string currentId in listId)
+            {
+                List<string> rowValues = new List<string>();
+                foreach (string col in orderedCols)
+                {
+                    string val = "";
+                    if (maxtrix[currentId].ContainsKey(col))
+                        val = maxtrix[currentId][col];
+                    rowValues.Add(val);
+                }
+                writer.WriteLine(string.Join(",", rowValues));
+            }
+
+            writer.Close();
+        }
+
     }
 }
